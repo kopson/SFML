@@ -6,7 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "DebugOverlay.h"
-#include "Player.h"
+#include "Entity.h"
 
 namespace Move {
     enum Moves { UP, DOWN, LEFT, RIGHT, NONE };
@@ -30,7 +30,7 @@ class Game {
         void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 
         sf::RenderWindow mWindow;
-        Player mPlayer;
+        Entity mPlayer;
         const float PlayerSpeed;
         const sf::Time TimePerFrame;
 

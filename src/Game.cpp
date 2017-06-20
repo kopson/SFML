@@ -13,7 +13,6 @@ Game::Game(int w, int h, std::string title):
 }
 
 Game::~Game() {
-    //dtor
 }
 
 void Game::init() {
@@ -125,11 +124,12 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
             mMove = isPressed ? Move::RIGHT : Move::NONE;
             break;
         case sf::Keyboard::P:
-            if (isPressed)
+            if (isPressed) {
                 if (mPaused)
                     resume();
                 else
                     pause();
+            }
             break;
         default:
             mMove = Move::NONE;
@@ -138,8 +138,8 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
 }
 
 void Game::save() {
-
 }
+
 void Game::pause() {
     mPaused = true;
 }

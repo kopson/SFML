@@ -8,13 +8,13 @@ class DebugOverlay
     public:
         DebugOverlay();
         virtual ~DebugOverlay();
-        const sf::Sprite& get();
+        const sf::Sprite& get() const;
         void set(const sf::Sprite& sprite);
         void update();
 
     private:
         sf::RenderTexture renderTexture;
-        const sf::Sprite* sprite;
+        const sf::Sprite* inputSprite;
         sf::Sprite rect;
 };
 

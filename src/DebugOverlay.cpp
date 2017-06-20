@@ -6,15 +6,14 @@ DebugOverlay::DebugOverlay() {
 }
 
 DebugOverlay::~DebugOverlay() {
-    //dtor
 }
 
-const sf::Sprite& DebugOverlay::get() {
+const sf::Sprite& DebugOverlay::get() const {
     return rect;
 }
 
 void DebugOverlay::set(const sf::Sprite& sprite) {
-    this->sprite = &sprite;
+    inputSprite = &sprite;
 
     auto gb = sprite.getLocalBounds();
 
@@ -25,16 +24,16 @@ void DebugOverlay::set(const sf::Sprite& sprite) {
 }
 
 void DebugOverlay::update() {
-    assert(sprite);
+    assert(inputSprite);
 
-    auto gb = sprite->getLocalBounds();
+    auto gb = inputSprite->getLocalBounds();
 
     sf::RectangleShape rectangle;
-    rectangle.setScale(sprite->getScale());
+    rectangle.setScale(inputSprite->getScale());
     rectangle.setSize(sf::Vector2f(gb.width, gb.height));
     rectangle.setOrigin(gb.width / 2, gb.height / 2);
-    rectangle.setPosition(sprite->getPosition());
-    rectangle.setRotation(sprite->getRotation());
+    rectangle.setPosition(inputSprite->getPosition());
+    rectangle.setRotation(inputSprite->getRotation());
 
     int thickness = 3;
     int length = 15;
@@ -47,15 +46,15 @@ void DebugOverlay::update() {
     hLine.setFillColor(sf::Color(100, 250, 50, 255));
     vLine.setSize(sf::Vector2f(length, thickness));
     vLine.setOrigin(length / 2, thickness / 2);
-    vLine.setPosition(sprite->getPosition());
+    vLine.setPosition(inputSprite->getPosition());
     hLine.setSize(sf::Vector2f(thickness, length));
     hLine.setOrigin(thickness / 2, length / 2);
-    hLine.setPosition(sprite->getPosition());
-    hLine.setRotation(sprite->getRotation());
-    vLine.setRotation(sprite->getRotation());
+    hLine.setPosition(inputSprite->getPosition());
+    hLine.setRotation(inputSprite->getRotation());
+    vLine.setRotation(inputSprite->getRotation());
 
     renderTexture.clear();
-    renderTexture.draw(*sprite);
+    renderTexture.draw(*inputSprite);
     renderTexture.draw(rectangle);
     renderTexture.draw(vLine);
     renderTexture.draw(hLine);

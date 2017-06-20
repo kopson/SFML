@@ -1,10 +1,10 @@
-#include "Player.h"
-#include "TextureHolder.h"
+#include "Entity.h"
+#include "ResourceHolder.h"
 #include "Utils.h"
 
 #include <cassert>
 
-Player::Player(std::string file):
+Entity::Entity(std::string file):
     mSprite(nullptr) {
 
     TextureHolder& th = TextureHolder::getInstance();
@@ -16,25 +16,42 @@ Player::Player(std::string file):
     Utils::CenterOrigin(*mSprite);
 }
 
-Player::~Player() {
+Entity::~Entity() {
     if (mSprite)
         delete mSprite;
     mSprite = nullptr;
 }
 
-void Player::setPosition(float x, float y) {
+void Entity::setPosition(float x, float y) {
     assert(mSprite);
 
     mSprite->setPosition(x, y);
 }
 
-void Player::move(sf::Vector2f delta) {
+void Entity::move(sf::Vector2f delta) {
     assert(mSprite);
 
     mSprite->move(delta);
     mSprite->rotate(1);
 }
 
-const sf::Sprite& Player::get() {
+const sf::Sprite& Entity::get() {
     return *mSprite;
+}
+
+void Entity::setVelocity(sf::Vector2f velocity) {
+    mVelocity = velocity;
+}
+
+void Entity::setVelocity(float vx, float vy) {
+    mVelocity.x = vx;
+    mVelocity.y = vy;
+}
+
+sf::Vector2f Entity::getVelocity() const {
+    return mVelocity;
+}
+
+void Entity::updateCurrent(sf::Time dt) {
+    move(mVelocity * dt.asSeconds());
 }
