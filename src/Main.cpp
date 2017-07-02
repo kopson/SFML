@@ -1,9 +1,18 @@
-#include "Game.h"
+#include <Game.hpp>
 
-int main(int argc, char* argv[]) {
+#include <stdexcept>
+#include <iostream>
 
-    Game game(800, 600, "SFML Game");
-    game.run();
-
+int main(int argc, char* argv[])
+{
+	try
+	{
+        Game game(800, 600, "SFML Game");
+        game.run();
+    }
+	catch (std::exception& e)
+	{
+		std::cout << "\nEXCEPTION: " << e.what() << std::endl;
+	}
     return 0;
 }

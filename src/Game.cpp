@@ -1,47 +1,73 @@
-#include "Game.h"
+#include <Game.hpp>
+#include <StringHelpers.hpp>
 
 #include <iostream>
 
-Game::Game(int w, int h, std::string title):
-    mWindow(sf::VideoMode(w, h), title),
-    mPlayer("res/audi.png"),
-    PlayerSpeed(30.0f),
-    TimePerFrame(sf::seconds(1.f / 60.f)),
-    mPaused(false) {
+#include <SFML/Window/Event.hpp>
 
+const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
+
+Game::Game(int w, int h, std::string title)
+: mWindow(sf::VideoMode(w, h), title, sf::Style::Close)
+, mWorld(mWindow)
+, PlayerSpeed(30.0f)
+, mPaused(false)
+, mFont()
+, mStatisticsText()
+, mStatisticsUpdateTime()
+, mStatisticsNumFrames(0)
+{
     init();
 }
 
-Game::~Game() {
+Game::~Game()
+{
 }
 
-void Game::init() {
-    mPlayer.setPosition(100.f, 100.f);
+void Game::init()
+{
+    mFont.loadFromFile("res/fonts/Sansation.ttf");
+	mStatisticsText.setFont(mFont);
+	mStatisticsText.setPosition(5.f, 5.f);
+	mStatisticsText.setCharacterSize(10);
 
-    mWindow.setVerticalSyncEnabled(true);
-    db.set(mPlayer.get());
+    //mWindow.setVerticalSyncEnabled(true);
+    //db.set(mPlayer.get());
 }
 
-void Game::run() {
+void Game::run()
+{
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
-    while (mWindow.isOpen()) {
-        processEvents();
-        if (!mPaused) {
-            timeSinceLastUpdate += mClock.restart();
-            while (timeSinceLastUpdate > TimePerFrame) {
+    while (mWindow.isOpen())
+    {
+        if (!mPaused)
+        {
+            sf::Time elapsedTime = mClock.restart();
+            timeSinceLastUpdate += elapsedTime;
+            while (timeSinceLastUpdate > TimePerFrame)
+            {
                 timeSinceLastUpdate -= TimePerFrame;
                 processEvents();
                 update(TimePerFrame);
             }
+            updateStatistics(elapsedTime);
         }
+        else
+        {
+            processEvents();
+        }
+
         render();
     }
 }
 
-void Game::processEvents() {
+void Game::processEvents()
+{
     sf::Event event;
-    while (mWindow.pollEvent(event)) {
-        switch (event.type) {
+    while (mWindow.pollEvent(event))
+    {
+        switch (event.type)
+        {
             case sf::Event::Closed:
                 save();
                 mWindow.close();
@@ -79,9 +105,11 @@ void Game::processEvents() {
     }
 }
 
-void Game::update(sf::Time deltaTime) {
+void Game::update(sf::Time deltaTime)
+{
     sf::Vector2f movement(0.f, 0.f);
-    switch(mMove) {
+    switch(mMove)
+    {
         case Move::UP:
             movement.y -= PlayerSpeed;
             break;
@@ -98,19 +126,41 @@ void Game::update(sf::Time deltaTime) {
             break;
     }
 
-    mPlayer.move(movement * deltaTime.asSeconds());
-    db.update();
+    //mOverlay.update();
+    mWorld.update(deltaTime);
 }
 
-void Game::render() {
+void Game::render()
+{
     mWindow.clear();
-    //mWindow.draw(mPlayer.get());
-    mWindow.draw(db.get());
+	mWorld.draw();
+
+    mWindow.setView(mWindow.getDefaultView());
+	mWindow.draw(mStatisticsText);
+    //mWindow.draw(mOverlay.get());
     mWindow.display();
 }
 
-void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
-    switch (key) {
+void Game::updateStatistics(sf::Time elapsedTime)
+{
+	mStatisticsUpdateTime += elapsedTime;
+	mStatisticsNumFrames += 1;
+
+	if (mStatisticsUpdateTime >= sf::seconds(1.0f))
+	{
+		mStatisticsText.setString(
+			"Frames / Second = " + toString(mStatisticsNumFrames) + "\n" +
+			"Time / Update = " + toString(mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames) + "us");
+
+		mStatisticsUpdateTime -= sf::seconds(1.0f);
+		mStatisticsNumFrames = 0;
+	}
+}
+
+void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
+{
+    switch (key)
+    {
         case sf::Keyboard::W:
             mMove = isPressed ? Move::UP : Move::NONE;
             break;
@@ -124,7 +174,8 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
             mMove = isPressed ? Move::RIGHT : Move::NONE;
             break;
         case sf::Keyboard::P:
-            if (isPressed) {
+            if (isPressed)
+            {
                 if (mPaused)
                     resume();
                 else
@@ -137,14 +188,17 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
     }
 }
 
-void Game::save() {
+void Game::save()
+{
 }
 
-void Game::pause() {
+void Game::pause()
+{
     mPaused = true;
 }
 
-void Game::resume() {
+void Game::resume()
+{
     mClock.restart();
     mPaused = false;
 }

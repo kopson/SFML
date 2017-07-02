@@ -1,18 +1,22 @@
-#include "DebugOverlay.h"
+#include <DebugOverlay.hpp>
 
 #include <cassert>
 
 DebugOverlay::DebugOverlay() {
 }
 
-DebugOverlay::~DebugOverlay() {
+
+DebugOverlay::~DebugOverlay()
+{
 }
 
-const sf::Sprite& DebugOverlay::get() const {
+const sf::Sprite& DebugOverlay::get() const
+{
     return rect;
 }
 
-void DebugOverlay::set(const sf::Sprite& sprite) {
+void DebugOverlay::set(const sf::Sprite& sprite)
+{
     inputSprite = &sprite;
 
     auto gb = sprite.getLocalBounds();
@@ -23,7 +27,8 @@ void DebugOverlay::set(const sf::Sprite& sprite) {
     rect.setTexture(renderTexture.getTexture());
 }
 
-void DebugOverlay::update() {
+void DebugOverlay::update()
+{
     assert(inputSprite);
 
     auto gb = inputSprite->getLocalBounds();

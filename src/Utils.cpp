@@ -1,4 +1,4 @@
-#include "Utils.h"
+#include <Utils.hpp>
 
 void Utils::CenterOrigin(sf::Sprite& sprite) {
     sf::FloatRect spriteSize = sprite.getLocalBounds();

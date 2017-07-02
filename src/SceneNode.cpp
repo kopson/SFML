@@ -1,14 +1,22 @@
-#include "SceneNode.h"
+#include <SceneNode.hpp>
 
-SceneNode::SceneNode() {
+#include <algorithm>
+#include <cassert>
+
+SceneNode::SceneNode()
+: mChildren()
+, mParent(nullptr)
+{
 }
 
-void SceneNode::attachChild(Ptr child) {
+void SceneNode::attachChild(Ptr child)
+{
     child->mParent = this;
     mChildren.push_back(std::move(child));
 }
 
-SceneNode::Ptr SceneNode::detachChild(const SceneNode& node) {
+SceneNode::Ptr SceneNode::detachChild(const SceneNode& node)
+{
     auto found = std::find_if(mChildren.begin(), mChildren.end(), [&] (Ptr& p) -> bool { return p.get() == &node; });
     assert(found != mChildren.end());
 
@@ -18,31 +26,51 @@ SceneNode::Ptr SceneNode::detachChild(const SceneNode& node) {
     return result;
 }
 
-void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
     states.transform *= getTransform();
 
     drawCurrent(target, states);
-    for (const Ptr& child : mChildren)
-        child->draw(target, states);
+    drawChildren(target, states);
 }
 
-void SceneNode::update(sf::Time dt) {
+void SceneNode::update(sf::Time dt)
+{
     updateCurrent(dt);
     updateChildren(dt);
 }
 
-void SceneNode::updateChildren(sf::Time dt) {
-    for(Ptr& child : mChildren)
+void SceneNode::updateCurrent(sf::Time)
+{
+	// Do nothing by default
+}
+
+void SceneNode::drawChildren(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	for (const Ptr& child : mChildren)
+		child->draw(target, states);
+}
+
+void SceneNode::updateChildren(sf::Time dt)
+{
+    for (Ptr& child : mChildren)
         child->update(dt);
 }
 
-sf::Transform SceneNode::getWorldTransform() const {
+void SceneNode::drawCurrent(sf::RenderTarget&, sf::RenderStates) const
+{
+	// Do nothing by default
+}
+
+sf::Transform SceneNode::getWorldTransform() const
+{
     sf::Transform transform = sf::Transform::Identity;
     for (const SceneNode* node = this; node != nullptr; node = node->mParent)
         transform = node->getTransform() * transform;
     return transform;
 }
 
-sf::Vector2f SceneNode::getWorldPosition() const {
+sf::Vector2f SceneNode::getWorldPosition() const
+{
     return getWorldTransform() * sf::Vector2f();
 }

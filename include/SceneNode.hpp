@@ -1,11 +1,14 @@
-#ifndef SCENENODE_H
-#define SCENENODE_H
+#ifndef SCENENODE_HPP
+#define SCENENODE_HPP
 
 #include <cassert>
 #include <memory>
 #include <vector>
 
-#include <SFML/Graphics.hpp>
+#include <SFML/System/NonCopyable.hpp>
+#include <SFML/System/Time.hpp>
+#include <SFML/Graphics/Transformable.hpp>
+#include <SFML/Graphics/Drawable.hpp>
 
 class SceneNode : public sf::Transformable, public sf::Drawable, private sf::NonCopyable {
 public:
@@ -20,12 +23,14 @@ public:
 
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const = 0;
-    virtual void updateCurrent(sf::Time dt) = 0;
+    virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+    void drawChildren(sf::RenderTarget& target, sf::RenderStates states) const;
+
+    virtual void updateCurrent(sf::Time dt);
     void updateChildren(sf::Time dt);
 
     std::vector<Ptr> mChildren;
     SceneNode* mParent;
 };
 
-#endif // SCENENODE_H
+#endif // SCENENODE_HPP
