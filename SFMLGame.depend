@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1498907056 source:c:\workspace\sfmlgame\src\game.cpp
+1508269828 source:c:\workspace\sfmlgame\src\game.cpp
 	<Game.hpp>
 	<StringHelpers.hpp>
 	<iostream>
@@ -445,11 +445,11 @@
 	<SFML/Graphics.hpp>
 	"ResourceHolder.inl"
 
-1498044412 c:\workspace\sfmlgame\include\resourceholder.inl
+1499004093 c:\workspace\sfmlgame\include\resourceholder.inl
 
 1497963923 c:\workspace\sfmlgame\src\resourceholder.inl
 
-1498083187 source:c:\workspace\sfmlgame\src\entity.cpp
+1508269087 source:c:\workspace\sfmlgame\src\entity.cpp
 	<Entity.hpp>
 
 1497989701 c:\workspace\sfmlgame\include\entity.h
@@ -466,8 +466,10 @@
 	"Entity.h"
 	"ResourceHolder.h"
 
-1498906416 source:c:\workspace\sfmlgame\src\scenenode.cpp
+1499003467 source:c:\workspace\sfmlgame\src\scenenode.cpp
 	<SceneNode.hpp>
+	<algorithm>
+	<cassert>
 
 1497989936 c:\workspace\sfmlgame\include\scenenode.h
 	<cassert>
@@ -475,10 +477,11 @@
 	<vector>
 	<SFML/Graphics.hpp>
 
-1498083185 c:\workspace\sfmlgame\include\entity.hpp
+1508271273 c:\workspace\sfmlgame\include\entity.hpp
 	<SceneNode.hpp>
 
-1498049987 c:\workspace\sfmlgame\include\scenenode.hpp
+1508271552 c:\workspace\sfmlgame\include\scenenode.hpp
+	<Category.hpp>
 	<cassert>
 	<memory>
 	<vector>
@@ -487,13 +490,12 @@
 	<SFML/Graphics/Transformable.hpp>
 	<SFML/Graphics/Drawable.hpp>
 
-1498906578 c:\workspace\sfmlgame\include\game.hpp
+1508271747 c:\workspace\sfmlgame\include\game.hpp
 	<DebugOverlay.hpp>
-	<Entity.hpp>
+	<Player.hpp>
 	<World.hpp>
 	<string>
 	<SFML/System/Time.hpp>
-	<SFML/Window/Keyboard.hpp>
 	<SFML/Graphics/Text.hpp>
 	<SFML/Graphics/Font.hpp>
 	<SFML/Graphics/RenderWindow.hpp>
@@ -501,18 +503,21 @@
 1498044215 c:\workspace\sfmlgame\include\debugoverlay.hpp
 	<SFML/Graphics.hpp>
 
-1498050212 c:\workspace\sfmlgame\include\world.hpp
+1508271004 c:\workspace\sfmlgame\include\world.hpp
 	<ResourceHolder.hpp>
 	<ResourceIdentifiers.hpp>
 	<SceneNode.hpp>
 	<SpriteNode.hpp>
 	<Vehicle.hpp>
+	<CommandQueue.hpp>
+	<Command.hpp>
 	<SFML/System/NonCopyable.hpp>
 	<SFML/Graphics/View.hpp>
 	<SFML/Graphics/Texture.hpp>
 	<array>
+	<queue>
 
-1498050183 c:\workspace\sfmlgame\include\resourceholder.hpp
+1499003810 c:\workspace\sfmlgame\include\resourceholder.hpp
 	<cassert>
 	<map>
 	<memory>
@@ -520,22 +525,22 @@
 	<string>
 	"ResourceHolder.inl"
 
-1498050195 c:\workspace\sfmlgame\include\resourceidentifiers.hpp
+1499003764 c:\workspace\sfmlgame\include\resourceidentifiers.hpp
 
-1498856882 c:\workspace\sfmlgame\include\spritenode.hpp
+1499003707 c:\workspace\sfmlgame\include\spritenode.hpp
 	<SceneNode.hpp>
 	<SFML/Graphics/Sprite.hpp>
 
-1498856947 c:\workspace\sfmlgame\include\vehicle.hpp
+1508271064 c:\workspace\sfmlgame\include\vehicle.hpp
 	<Entity.hpp>
 	<ResourceIdentifiers.hpp>
 	<SFML/Graphics/Sprite.hpp>
 
-1498050330 c:\workspace\sfmlgame\include\stringhelpers.hpp
+1499003575 c:\workspace\sfmlgame\include\stringhelpers.hpp
 	<sstream>
 	<StringHelpers.inl>
 
-1498050375 c:\workspace\sfmlgame\include\stringhelpers.inl
+1499003599 c:\workspace\sfmlgame\include\stringhelpers.inl
 
 1498856909 source:c:\workspace\sfmlgame\src\spritenode.cpp
 	<SpriteNode.hpp>
@@ -544,7 +549,31 @@
 1497824158 c:\workspace\sfmlgame\include\utils.hpp
 	<SFML/Graphics.hpp>
 
-1498857085 source:c:\workspace\sfmlgame\src\world.cpp
+1499001938 source:c:\workspace\sfmlgame\src\world.cpp
 	<World.hpp>
 	<SFML/Graphics/RenderWindow.hpp>
+
+1508271442 c:\workspace\sfmlgame\include\player.hpp
+	<Command.hpp>
+	<SFML/Window/Event.hpp>
+	<map>
+
+1508271147 c:\workspace\sfmlgame\include\command.hpp
+	<Category.hpp>
+	<SFML/System/Time.hpp>
+	<functional>
+	<cassert>
+
+1508271173 c:\workspace\sfmlgame\include\category.hpp
+
+1508271217 c:\workspace\sfmlgame\include\commandqueue.hpp
+	<Command.hpp>
+	<queue>
+
+1508270627 source:c:\workspace\sfmlgame\src\command.cpp
+	<Command.hpp>
+
+1508270614 source:c:\workspace\sfmlgame\src\commandqueue.cpp
+	<CommandQueue.hpp>
+	<SceneNode.hpp>
 

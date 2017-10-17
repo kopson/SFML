@@ -1,12 +1,15 @@
 #ifndef RESOURCEIDENTIFIERS_HPP
 #define RESOURCEIDENTIFIERS_HPP
 
-namespace sf {
+namespace sf
+{
 	class Texture;
 }
 
-namespace Textures {
-	enum ID {
+namespace Textures
+{
+	enum ID
+	{
 	    Audi,
 		Eagle,
 		Raptor,

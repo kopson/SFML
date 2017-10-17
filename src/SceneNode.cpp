@@ -1,4 +1,5 @@
 #include <SceneNode.hpp>
+#include <Command.hpp>
 
 #include <algorithm>
 #include <cassert>
@@ -26,14 +27,6 @@ SceneNode::Ptr SceneNode::detachChild(const SceneNode& node)
     return result;
 }
 
-void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-    states.transform *= getTransform();
-
-    drawCurrent(target, states);
-    drawChildren(target, states);
-}
-
 void SceneNode::update(sf::Time dt)
 {
     updateCurrent(dt);
@@ -45,21 +38,34 @@ void SceneNode::updateCurrent(sf::Time)
 	// Do nothing by default
 }
 
-void SceneNode::drawChildren(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	for (const Ptr& child : mChildren)
-		child->draw(target, states);
-}
-
 void SceneNode::updateChildren(sf::Time dt)
 {
     for (Ptr& child : mChildren)
         child->update(dt);
 }
 
+void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    states.transform *= getTransform();
+
+    drawCurrent(target, states);
+    drawChildren(target, states);
+}
+
 void SceneNode::drawCurrent(sf::RenderTarget&, sf::RenderStates) const
 {
 	// Do nothing by default
+}
+
+void SceneNode::drawChildren(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	for (const Ptr& child : mChildren)
+		child->draw(target, states);
+}
+
+sf::Vector2f SceneNode::getWorldPosition() const
+{
+	return getWorldTransform() * sf::Vector2f();
 }
 
 sf::Transform SceneNode::getWorldTransform() const
@@ -70,7 +76,16 @@ sf::Transform SceneNode::getWorldTransform() const
     return transform;
 }
 
-sf::Vector2f SceneNode::getWorldPosition() const
+void SceneNode::onCommand(const Command& command, sf::Time dt)
 {
-    return getWorldTransform() * sf::Vector2f();
+	if (command.category & getCategory())
+		command.action(*this, dt);
+
+	for (Ptr& child : mChildren)
+		child->onCommand(command, dt);
+}
+
+unsigned int SceneNode::getCategory() const
+{
+	return Category::Scene;
 }

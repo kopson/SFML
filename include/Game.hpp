@@ -2,28 +2,16 @@
 #define GAME_HPP
 
 #include <DebugOverlay.hpp>
-#include <Entity.hpp>
+#include <Player.hpp>
 #include <World.hpp>
 
 #include <string>
 
 #include <SFML/System/Time.hpp>
-#include <SFML/Window/Keyboard.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-namespace Move
-{
-    enum Moves
-    {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT,
-        NONE
-    };
-}
 
 class Game : private sf::NonCopyable
 {
@@ -38,18 +26,16 @@ class Game : private sf::NonCopyable
 
     private:
         void init();
-        void processEvents();
-        void update(sf::Time deltaTime);
+        void processInput();
+        void update(sf::Time elapsedTime);
         void render();
         void updateStatistics(sf::Time elapsedTime);
         void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 
         sf::RenderWindow mWindow;
         World mWorld;
-        const float PlayerSpeed;
         static const sf::Time TimePerFrame;
-
-        Move::Moves mMove;
+		Player mPlayer;
         bool mPaused;
         sf::Clock mClock;
         DebugOverlay mOverlay;

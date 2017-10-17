@@ -18,6 +18,7 @@ class Vehicle : public Entity
         };
 
         explicit Vehicle(Type type, const TextureHolder& textures);
+		virtual unsigned int	getCategory() const;
 
     private:
         virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;

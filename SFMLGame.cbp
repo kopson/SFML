@@ -48,13 +48,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="include/DebugOverlay.h" />
 		<Unit filename="include/DebugOverlay.hpp" />
 		<Unit filename="include/Entity.hpp" />
-		<Unit filename="include/Game.h" />
 		<Unit filename="include/Game.hpp" />
-		<Unit filename="include/Player.h" />
-		<Unit filename="include/ResourceHolder.h" />
 		<Unit filename="include/ResourceHolder.hpp" />
 		<Unit filename="include/ResourceHolder.inl" />
 		<Unit filename="include/ResourceIdentifiers.hpp" />
@@ -62,8 +58,6 @@
 		<Unit filename="include/SpriteNode.hpp" />
 		<Unit filename="include/StringHelpers.hpp" />
 		<Unit filename="include/StringHelpers.inl" />
-		<Unit filename="include/Utils.h" />
-		<Unit filename="include/Utils.hpp" />
 		<Unit filename="include/Vehicle.hpp" />
 		<Unit filename="include/World.hpp" />
 		<Unit filename="res/fonts/Sansation.ttf" />
@@ -77,7 +71,6 @@
 		<Unit filename="src/Main.cpp" />
 		<Unit filename="src/SceneNode.cpp" />
 		<Unit filename="src/SpriteNode.cpp" />
-		<Unit filename="src/Utils.cpp" />
 		<Unit filename="src/Vehicle.cpp" />
 		<Unit filename="src/World.cpp" />
 		<Extensions>

@@ -6,44 +6,55 @@
 #include <SceneNode.hpp>
 #include <SpriteNode.hpp>
 #include <Vehicle.hpp>
+#include <CommandQueue.hpp>
+#include <Command.hpp>
 
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
 #include <array>
+#include <queue>
 
-namespace sf {
+namespace sf
+{
 	class RenderWindow;
 }
 
-class World : private sf::NonCopyable {
-public:
-    explicit World(sf::RenderWindow& window);
-    void update(sf::Time dt);
-    void draw();
+class World : private sf::NonCopyable
+{
+    public:
+        explicit World(sf::RenderWindow& window);
+        void update(sf::Time dt);
+        void draw();
 
-private:
-    void loadTextures();
-    void buildScene();
+		CommandQueue&						getCommandQueue();
 
-    enum Layer {
-        Background,
-        Air,
-        LayerCount
-    };
+    private:
+        void loadTextures();
+        void buildScene();
+		void								adaptPlayerPosition();
+		void								adaptPlayerVelocity();
 
-    sf::RenderWindow& mWindow;
-    sf::View mWorldView;
-    TextureHolder mTextures;
+        enum Layer
+        {
+            Background,
+            Air,
+            LayerCount
+        };
 
-    SceneNode mSceneGraph;
-    std::array<SceneNode*, LayerCount> mSceneLayers;
+        sf::RenderWindow& mWindow;
+        sf::View mWorldView;
+        TextureHolder mTextures;
 
-    sf::FloatRect mWorldBounds;
-    sf::Vector2f mSpawnPosition;
-    float mScrollSpeed;
-    Vehicle* mPlayerCar;
+        SceneNode mSceneGraph;
+        std::array<SceneNode*, LayerCount> mSceneLayers;
+		CommandQueue						mCommandQueue;
+
+        sf::FloatRect mWorldBounds;
+        sf::Vector2f mSpawnPosition;
+        float mScrollSpeed;
+        Vehicle* mPlayerCar;
 };
 
 #endif // WORLD_HPP
