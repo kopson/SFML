@@ -8,19 +8,20 @@
 #include <functional>
 #include <cassert>
 
-
 class SceneNode;
 
 struct Command
 {
+	typedef std::function<void(SceneNode&, sf::Time)> Action;
+
 	Command();
 
-	std::function<void(SceneNode&, sf::Time)>	action;
-	unsigned int								category;
+	Action						action;
+	unsigned int category;
 };
 
 template <typename GameObject, typename Function>
-std::function<void(SceneNode&, sf::Time)> derivedAction(Function fn)
+Command::Action derivedAction(Function fn)
 {
 	return [=] (SceneNode& node, sf::Time dt)
 	{

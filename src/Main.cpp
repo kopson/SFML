@@ -1,4 +1,4 @@
-#include <Game.hpp>
+#include <Application.hpp>
 
 #include <stdexcept>
 #include <iostream>
@@ -7,8 +7,8 @@ int main(int argc, char* argv[])
 {
 	try
 	{
-        Game game(800, 600, "SFML Game");
-        game.run();
+        Application app;
+		app.run();
     }
 	catch (std::exception& e)
 	{

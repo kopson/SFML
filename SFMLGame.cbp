@@ -48,9 +48,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="include/Command.hpp" />
+		<Unit filename="include/CommandQueue.hpp" />
 		<Unit filename="include/DebugOverlay.hpp" />
 		<Unit filename="include/Entity.hpp" />
 		<Unit filename="include/Game.hpp" />
+		<Unit filename="include/Player.hpp" />
 		<Unit filename="include/ResourceHolder.hpp" />
 		<Unit filename="include/ResourceHolder.inl" />
 		<Unit filename="include/ResourceIdentifiers.hpp" />
@@ -65,10 +68,13 @@
 		<Unit filename="res/textures/Desert.png" />
 		<Unit filename="res/textures/Eagle.png" />
 		<Unit filename="res/textures/Raptor.png" />
+		<Unit filename="src/Command.cpp" />
+		<Unit filename="src/CommandQueue.cpp" />
 		<Unit filename="src/DebugOverlay.cpp" />
 		<Unit filename="src/Entity.cpp" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/Main.cpp" />
+		<Unit filename="src/Player.cpp" />
 		<Unit filename="src/SceneNode.cpp" />
 		<Unit filename="src/SpriteNode.cpp" />
 		<Unit filename="src/Vehicle.cpp" />
